@@ -1,0 +1,18 @@
+node_modules/
+dist/
+dist-ssr/
+coverage/
+.turbo/
+*.log
+
+# Secrets — never commit real environment files
+.env
+.env.*
+!.env.example
+*.local
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store

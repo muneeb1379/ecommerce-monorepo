@@ -1,0 +1,17 @@
+/* Preflight is intentionally skipped: Mantine ships its own base
+   reset and the two disagree on buttons/inputs/typography. We only
+   want Tailwind's theme + utility classes for layout/spacing. */
+@import 'tailwindcss/theme.css';
+@import 'tailwindcss/utilities.css';
+
+@import '@mantine/core/styles.css';
+@import '@mantine/notifications/styles.css';
+@import '@mantine/dates/styles.css';
+@import '@mantine/dropzone/styles.css';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
