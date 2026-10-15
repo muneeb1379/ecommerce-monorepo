@@ -1,17 +1,23 @@
-import swagger from '@fastify/swagger'
-import swaggerUi from '@fastify/swagger-ui'
 import type { FastifyInstance } from 'fastify'
 import { jsonSchemaTransform } from 'fastify-type-provider-zod'
 
 /**
  * OpenAPI generated from the Zod route schemas: the machine-readable
  * contract. Human-readable docs live in docs/. Enabled by default outside
- * production (ENABLE_API_DOCS).
+ * production (ENABLE_API_DOCS). The plugins are imported lazily so that
+ * disabled deployments never load @fastify/swagger-ui (its @fastify/static
+ * dependency require()s the ESM-only content-disposition, which crashes on
+ * Node runtimes older than 22.12).
  *
  *   UI:   /docs
  *   JSON: /docs/json
  */
 export async function registerApiDocs(app: FastifyInstance): Promise<void> {
+  const [{ default: swagger }, { default: swaggerUi }] = await Promise.all([
+    import('@fastify/swagger'),
+    import('@fastify/swagger-ui'),
+  ])
+
   await app.register(swagger, {
     openapi: {
       openapi: '3.1.0',
